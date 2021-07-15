@@ -1,7 +1,7 @@
 import React from 'react';
 import { Jumbotron } from 'react-bootstrap';
 // import styled from 'styled-components';
-import {ImDownload, ImShare2} from 'react-icons/im';
+import {ImShare2} from 'react-icons/im';
 
 const HeroBanner = (props) => {
 

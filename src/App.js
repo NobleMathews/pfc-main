@@ -28,10 +28,10 @@ const App =()=> {
            } 
            return o["File Extension"] !== 'N/A'; 
         });
-        const previewData = albumData.map(con => _.pick(con, ["Folder name", "Preview Link"]));
+        const previewData = albumData.map(con => _.pick(con, ["Folder name", "Thumbnail Link"]));
         const finalPreview = _.chain(previewData)
          .keyBy('Folder name')
-         .mapValues('Preview Link')
+         .mapValues('Thumbnail Link')
          .value();
         setAlbums(finalPreview);
      })

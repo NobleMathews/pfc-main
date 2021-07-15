@@ -4,7 +4,7 @@ import FadeIn from 'react-fade-in';
 import Container from 'react-bootstrap/Container'
 import Skeleton from 'react-loading-skeleton';
 import ImageGallery from 'react-image-gallery';
-import logo from '../../assets/images/iitt_w.png'
+// import logo from '../../assets/images/iitt_w.png'
 import logo_i from '../../assets/images/logo.png'
 import Tabletop from "tabletop";
 var _ = require('lodash');
@@ -32,15 +32,15 @@ const Home = () => {
              } 
              return o["File Extension"] !== 'N/A'; 
           });
-          const previewData = albumData.map(con => _.pick(con, ["Folder name", "Preview Link"]));
+          const previewData = albumData.map(con => _.pick(con, ["Folder name", "Thumbnail Link"]));
           const finalPreview = _.chain(previewData)
            .keyBy('Folder name')
-           .mapValues('Preview Link')
+           .mapValues('Thumbnail Link')
            .value();
           setAlbums(finalPreview);
           const gdata = _.groupBy(fdata,"Folder name");
           gdata["Showcase"].forEach((image,i)=>{
-            available.push({"id":i,"original":image["Preview Link"]});
+            available.push({"id":i,"original":image["Thumbnail Link"]});
           });
           setSlides(available.sort(() => .5 - Math.random()).slice(0,useShowcase));
        })
@@ -70,7 +70,7 @@ const Home = () => {
           <div className="flex-grow-1 text-right">
             <ul className="navbar-nav flex-nowrap" style={{justifyContent:"flex-end"}}>
               <li className="nav-item">
-                <a href="#" className="nav-link m-2 menu-item nav-active">Our Team</a>
+                <a href="/team" className="nav-link m-2 menu-item nav-active">Our Team</a>
               </li>
               {/* <li className="nav-item">
                 <a href="#" className="nav-link m-2 menu-item">Blog</a>

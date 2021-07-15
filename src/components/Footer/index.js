@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="container">
           <div className="grid-container">
             <div className="grid-item">
-              <img src={logo} className="logo-img" />
+              <img alt="logo" src={logo} className="logo-img" />
             </div>
             <div className="grid-item inner-grid-container">  
               <div className="grid-item"><a href>Contact us</a>
@@ -22,10 +22,9 @@ const Footer = () => {
             </div>
             <div className="grid-item">
               <div className="social-buttons">
-                <a target="_blank" rel="noreferrer" href="https://www.facebook.com/photographyclubiittp/"><i className="lni lni-facebook-filled" /></a>
-                <a target="_blank" rel="noreferrer" href="#"><i className="lni lni-twitter-filled" /></a>
                 <a target="_blank" rel="noreferrer" href="https://www.instagram.com/pfciitt"><i className="lni lni-instagram-filled" /></a>
-                <a target="_blank" rel="noreferrer" href="#"><i className="lni lni-linkedin-original" /></a>
+                <a target="_blank" rel="noreferrer" href="https://www.youtube.com/channel/UCgmHdDwotMlBsrgxJE9tIBA"><i className="lni lni-youtube" /></a>
+                <a target="_blank" rel="noreferrer" href="https://www.facebook.com/photographyclubiittp/"><i className="lni lni-facebook-filled" /></a>
               </div>
             </div>   
           </div>
