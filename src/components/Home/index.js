@@ -40,7 +40,7 @@ const Home = () => {
           setAlbums(finalPreview);
           const gdata = _.groupBy(fdata,"Folder name");
           gdata["Showcase"].forEach((image,i)=>{
-            available.push({"id":i,"original":image["Thumbnail Link"]});
+            available.push({"id":i,"original":image["Thumbnail Link"].split("=")[0]+"=s720"});
           });
           setSlides(available.sort(() => .5 - Math.random()).slice(0,useShowcase));
        })
@@ -58,7 +58,7 @@ const Home = () => {
     // Querying everything parallely to cache on homepage
     return(
         <OuterWrapper>
-        <ImageGallery slideInterval={6500} items={slides} showNav={false} showThumbnails={false} showFullscreenButton={false} autoPlay={false} showPlayButton={false}/>
+        <ImageGallery slideInterval={3000} items={slides} showNav={false} showThumbnails={false} showFullscreenButton={false} autoPlay={true} showPlayButton={false}/>
         {/* <a className="sidebar__logo" type="button" href="https://www.iittp.ac.in/" rel="noreferrer" target="_blank">
             <img src={logo} style={{height:"100%"}}/>
         </a> */}
