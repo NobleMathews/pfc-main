@@ -75,7 +75,7 @@ const Gallery = () => {
                    
             </Jumbotron> */}
             {images.length>0 &&
-            <HeroBanner links={images[0]["Thumbnail Link"].split("=")[0]+"=s720"} pagename={decodeURI(id)} />
+            <HeroBanner links={images[0]["Thumbnail Link"].split("=")[0]+"=s1024"} pagename={decodeURI(id)} />
             }
             <div className="gallery-shr">
             <Parallax y={[0,0]}>
@@ -98,7 +98,7 @@ const Gallery = () => {
                                     <div key={"skeleton"+i}>
                                     <Skeleton style={{display: loading[i] ? "none" : "block", paddingBottom: `${getImgHeight(image["Height"],image["Width"])}px`,width: "100%"}}/>
                                     <a href={image["Direct Link"]}>
-                                        <img className="image" key={i} alt={`${decodeURI(id)}#${i+1}`} style={{width: "100%", display: loading[i] ? "block" : "none"}} src={image["Thumbnail Link"]} onLoad={()=>imageLoaded(i)}/>
+                                        <img className="image" key={i} alt={`${decodeURI(id)}#${i+1}`} style={{width: "100%", display: loading[i] ? "block" : "none"}} src={image["Thumbnail Link"].split("=")[0]+"=s480"} onLoad={()=>imageLoaded(i)}/>
                                     </a>
                                     </div>
                                 ))}

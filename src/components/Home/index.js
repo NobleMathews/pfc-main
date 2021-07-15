@@ -40,7 +40,7 @@ const Home = () => {
           setAlbums(finalPreview);
           const gdata = _.groupBy(fdata,"Folder name");
           gdata["Showcase"].forEach((image,i)=>{
-            available.push({"id":i,"original":image["Thumbnail Link"].split("=")[0]+"=s720"});
+            available.push({"id":i,"original":image["Thumbnail Link"].split("=")[0]+"=s1024"});
           });
           setSlides(available.sort(() => .5 - Math.random()).slice(0,useShowcase));
        })
