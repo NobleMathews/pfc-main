@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Route } from "react-router-dom";
 import Home from "./components/Home";
 import Gallery from "./components/Gallery";
@@ -8,35 +8,9 @@ import { stack as Menu } from 'react-burger-menu'
 import ScrollToTop from "react-scroll-to-top";
 import {FaArrowUp} from 'react-icons/fa';
 import Footer from './components/Footer';
-import Tabletop from "tabletop";
-var _ = require('lodash');
+import data from './assets/data/data.json';
 
 const App =()=> {
-
-  const [albums,setAlbums] = useState([]);
-
-  useEffect(() => {
-    Tabletop.init({
-        key: "1vPQKs66Z2bwS_BvA9vjTcyYGyksw23BUKxiqzxak9pQ",
-        simpleSheet: true
-     })
-     .then((data) => {
-        const albumData = [];
-        _.filter(data, function(o) {
-           if(o["Filename"].split('.')[0] === "preview"){
-              albumData.push(o);
-           } 
-           return o["File Extension"] !== 'N/A'; 
-        });
-        const previewData = albumData.map(con => _.pick(con, ["Folder name", "Thumbnail Link"]));
-        const finalPreview = _.chain(previewData)
-         .keyBy('Folder name')
-         .mapValues('Thumbnail Link')
-         .value();
-        setAlbums(finalPreview);
-     })
-     .catch((err) => console.warn(err));
-},[]);
 
   return (
    <div id="outer-container" className="App" style={{"background":'var(--color-primary)', height: "100%"}}>
@@ -50,7 +24,7 @@ const App =()=> {
         <span> Albums </span>
         <span> --------- </span>
         {
-          Object.keys(albums).map((key) => 
+          Object.keys(data).map((key) => 
           <a href={`/gallery/${encodeURI(key)}`} key={key} className="menu-item" tabIndex="0">
           <i className="lni lni-image"></i><span> {key}</span>
           </a>
@@ -90,5 +64,11 @@ const GlobalStyles = createGlobalStyle`
     --color-primary: 	#121212;
     /* --color-accent: #F75743; */
     --color-accent: #383838;
+  }
+  .menu-item{
+    padding-bottom: 6px;
+  }
+  .menu-item:hover{
+    color: #FFFFBF!important;
   }
 `;

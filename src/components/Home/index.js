@@ -1,57 +1,29 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useState, useRef} from 'react'
 import styled from 'styled-components';
 import FadeIn from 'react-fade-in';
 import Container from 'react-bootstrap/Container'
 import Skeleton from 'react-loading-skeleton';
 import ImageGallery from 'react-image-gallery';
 // import logo from '../../assets/images/iitt_w.png'
-import logo_i from '../../assets/images/logo.png'
-import Tabletop from "tabletop";
-var _ = require('lodash');
+import logo_i from '../../assets/images/logo.png';
+import data from '../../assets/data/data.json';
 
 const useShowcase = 5;
 
 var available = [];
-
+var slides = [];
 const Home = () => {
-  const [slides, setSlides] = useState([]);
-  const [albumIDs, setAlbums] = useState([]);
 
-  
-
-  useEffect(() => {
-      Tabletop.init({
-          key: "1vPQKs66Z2bwS_BvA9vjTcyYGyksw23BUKxiqzxak9pQ",
-          simpleSheet: true
-       })
-       .then((data) => {
-          const albumData = [];
-          const fdata =  _.filter(data, function(o) {
-             if(o["Filename"].split('.')[0] === "preview"){
-                albumData.push(o);
-             } 
-             return o["File Extension"] !== 'N/A'; 
-          });
-          const previewData = albumData.map(con => _.pick(con, ["Folder name", "Thumbnail Link"]));
-          const finalPreview = _.chain(previewData)
-           .keyBy('Folder name')
-           .mapValues('Thumbnail Link')
-           .value();
-          setAlbums(finalPreview);
-          const gdata = _.groupBy(fdata,"Folder name");
-          gdata["Showcase"].forEach((image,i)=>{
-            available.push({"id":i,"original":image["Thumbnail Link"].split("=")[0]+"=s1024"});
-          });
-          setSlides(available.sort(() => .5 - Math.random()).slice(0,useShowcase));
-       })
-       .catch((err) => console.warn(err));
-  },[]);
+    data["Showcase"]["Data"].forEach((image)=>{
+      available.push({"id":image["id"],"original":image["Thumbnail Link"].split("=")[0]+"=s1024"});
+    });
+    slides = available.sort(() => .5 - Math.random()).slice(0,useShowcase);
 
     const [loading, setLoading] = useState(true);
     const counter = useRef(0);
     const imageLoaded = () => {
       counter.current += 1;
-      if (counter.current >= Object.keys(albumIDs).length) {
+      if (counter.current >= Object.keys(data).length) {
         setLoading(false);
       }
     }
@@ -87,14 +59,14 @@ const Home = () => {
          <ContainerCustom>
          <Container fluid={true} >     
            <FadeIn delay={100} className="justify-content-center row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1">            
-             {Object.keys(albumIDs).map((name, index)=> (
-                <div className="card-deck" key={index}> 
+             {Object.keys(data).map((album)=> (
+                <div className="card-deck" key={album}> 
                     <div className="card">
-                    <a className="entireCard" style={{display:"block"}} href={`/gallery/${encodeURI(name)}`}> 
+                    <a className="entireCard" style={{display:"block"}} href={`/gallery/${encodeURI(album)}`}> 
                     <div className="card-body">
                     <Skeleton style={{display: loading ? "block" : "none"}} className={"setHeight"}/>
-                    <img style={{display: loading ? "none" : "block"}} className="card-img-top cover" src={albumIDs[name]} alt={"Placeholder preview"} onLoad={imageLoaded}/>
-                    <h5 className="title">{name}</h5>
+                    <img style={{display: loading ? "none" : "block"}} className="card-img-top cover" src={data[album]["Preview"]["Thumbnail Link"]} alt={"Placeholder preview"} onLoad={imageLoaded}/>
+                    <h5 className="title">{album}</h5>
                     </div>
                     </a>
                     </div>

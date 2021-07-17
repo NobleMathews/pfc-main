@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components';
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 import {useParams} from 'react-router-dom'
@@ -6,15 +6,13 @@ import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import { SRLWrapper } from "simple-react-lightbox";
 import Skeleton from 'react-loading-skeleton';
 import HeroBanner from '../Banner';
-import Tabletop from "tabletop";
 import useWindowDimensions from "../helper"
-
-var _ = require('lodash');
+import data from '../../assets/data/data.json';
 
 const Gallery = () => {
     const {id} = useParams();
     const [loading, setLoading] = useState([]);
-    const [images, setImages] = useState([]);
+    var images = [];
     const { width } = useWindowDimensions();
 
     const imageLoaded = (i) => {
@@ -37,25 +35,26 @@ const Gallery = () => {
         return scaleHeight;
     }
 
-    useEffect(() => {
-        Tabletop.init({
-            key: "1vPQKs66Z2bwS_BvA9vjTcyYGyksw23BUKxiqzxak9pQ",
-            simpleSheet: true
-         })
-         .then((data) => {
-            const albumData = [];
-            const fdata =  _.filter(data, function(o) {
-               if(o["Filename"].split('.')[0] === "preview"){
-                  albumData.push(o);
-               } 
-               return o["File Extension"] !== 'N/A'; 
-            });
-            const gdata = _.groupBy(fdata,"Folder name");
-            const imageL = gdata[decodeURI(id)];
-            setImages(imageL);
-         })
-         .catch((err) => console.warn(err));
-    },[id]);
+    // useEffect(() => {
+        // Tabletop.init({
+        //     key: "1vPQKs66Z2bwS_BvA9vjTcyYGyksw23BUKxiqzxak9pQ",
+        //     simpleSheet: true
+        //  })
+        //  .then((data) => {
+        //     const albumData = [];
+        //     const fdata =  _.filter(data, function(o) {
+        //        if(o["Filename"].split('.')[0] === "preview"){
+        //           albumData.push(o);
+        //        } 
+        //        return o["File Extension"] !== 'N/A'; 
+        //     });
+        //     const gdata = _.groupBy(fdata,"Folder name");
+        //     const imageL = gdata[decodeURI(id)];
+        //     setImages(imageL);
+        //  })
+        //  .catch((err) => console.warn(err));
+        images = data[decodeURI(id)]["Data"];
+    // },[id]);
 
     return (
         
@@ -82,11 +81,11 @@ const Gallery = () => {
                 
                 <GalleryContainer>
                     <SRLWrapper
-                        // options={{
-                        //     buttons: {
-                        //         showDownloadButton: false,
-                        //     }
-                        // }}
+                        options={{
+                            thumbnails: {
+                                showThumbnails: false,
+                            }
+                        }}
                     >
                         <ResponsiveMasonry
                                 columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
@@ -96,9 +95,9 @@ const Gallery = () => {
                                 {/* <img alt="Testing masonry packing" style={{width: "100%", display: "block"}} src={"https://picsum.photos/200/300"} /> */}
                                 {images.map((image,i)=>(
                                     <div key={"skeleton"+i}>
-                                    <Skeleton style={{display: loading[i] ? "none" : "block", paddingBottom: `${getImgHeight(image["Height"],image["Width"])}px`,width: "100%"}}/>
+                                    <Skeleton style={{display: loading[i] ? "none" : "block", paddingBottom: `${getImgHeight(image["height"],image["width"])}px`,width: "100%"}}/>
                                     <a href={image["Direct Link"]}>
-                                        <img className="image" key={i} alt={`${decodeURI(id)}#${i+1}`} style={{width: "100%", display: loading[i] ? "block" : "none"}} src={image["Thumbnail Link"].split("=")[0]+"=s480"} onLoad={()=>imageLoaded(i)}/>
+                                        <img className="image" key={image["id"]} alt={`${decodeURI(id)}#${i+1}`} style={{width: "100%", display: loading[i] ? "block" : "none"}} src={image["Thumbnail Link"].split("=")[0]+"=s480"} onLoad={()=>imageLoaded(i)}/>
                                     </a>
                                     </div>
                                 ))}

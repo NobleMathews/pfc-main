@@ -43,7 +43,6 @@
     "run-script-os": "^1.1.5",
     "simple-react-lightbox": "file:dev_modules/simple-react-lightbox",
     "styled-components": "^5.2.1",
-    "tabletop": "^1.6.3",
     "web-vitals": "^1.0.1"
   },
   "eslintConfig": {
