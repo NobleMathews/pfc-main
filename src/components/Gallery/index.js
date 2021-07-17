@@ -74,7 +74,7 @@ const Gallery = () => {
                    
             </Jumbotron> */}
             {images.length>0 &&
-            <HeroBanner links={images[0]["Thumbnail Link"].split("=")[0]+"=s1024"} pagename={decodeURI(id)} />
+            <HeroBanner links={images[0]["Thumbnail Link"].split("=")[0]+"=s1024"} pagename={decodeURI(id)} directLink={data[decodeURI(id)]["Folder Link"]} />
             }
             <div className="gallery-shr">
             <Parallax y={[0,0]}>
