@@ -15,7 +15,7 @@ var slides = [];
 const Home = () => {
 
     data["Showcase"]["Data"].forEach((image)=>{
-      available.push({"id":image["id"],"original":image["Thumbnail Link"].split("=")[0]+"=s1024"});
+      available.push({"id":image["id"],"original":image["Direct Link"]});
     });
     slides = available.sort(() => .5 - Math.random()).slice(0,useShowcase);
 
@@ -65,7 +65,7 @@ const Home = () => {
                     <a className="entireCard" style={{display:"block"}} href={`/gallery/${encodeURI(album)}`}> 
                     <div className="card-body">
                     <Skeleton style={{display: loading ? "block" : "none"}} className={"setHeight"}/>
-                    <img style={{display: loading ? "none" : "block"}} className="card-img-top cover" src={data[album]["Preview"]["Thumbnail Link"]} alt={"Placeholder preview"} onLoad={imageLoaded}/>
+                    <img style={{display: loading ? "none" : "block"}} className="card-img-top cover" src={data[album]["Preview"]["Direct Link"]} alt={"Placeholder preview"} onLoad={imageLoaded}/>
                     <h5 className="title">{album}</h5>
                     </div>
                     </a>
